@@ -22,10 +22,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ContentModel = exports.LinkModel = exports.UserModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-mongoose_1.default.connect("mongodb://localhost:27017/brainly");
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+mongoose_1.default.connect(process.env.MONGO_DB_URL);
 const UserSchema = new mongoose_1.Schema({
     username: { type: String, unique: true },
     password: String

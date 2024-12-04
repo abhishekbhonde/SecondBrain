@@ -7,6 +7,8 @@ import { userMiddleware } from "./middleware";
 import cors from "cors";
 import {z} from "zod"
 import bcrypt from "bcrypt"
+import dotenv from "dotenv"
+dotenv.config()
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -57,7 +59,7 @@ app.post("/api/v1/signin", async (req: Request, res: Response):Promise<void> => 
     if(username&&storedPassword){
        const token = jwt.sign({
         username
-       }, JWT_PASSWORD as string)
+       }, process.env.JWT_PASSWORD as string)
 
        res.status(200).json({ message: "Signin successful", token });
     }
@@ -200,4 +202,4 @@ app.get("/api/v1/brain/:shareLink", async (req, res) => {
 
 })
 
-app.listen(3000);
+app.listen(3001);
