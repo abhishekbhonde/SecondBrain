@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import dotenv from "dotenv";
-dotenv.config()
-export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
+import { JWT_PASSWORD } from "./config";
+
+export const userMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const header = req.headers["authorization"];
-    const decoded = jwt.verify(header as string, process.env.JWT_SECRET as string)
+    const decoded = jwt.verify(header as string, JWT_PASSWORD)
     if (decoded) {
         if (typeof decoded === "string") {
             res.status(403).json({
@@ -12,7 +12,6 @@ export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) 
             })
             return;    
         }
-        //@ts-ignore
         req.userId = (decoded as JwtPayload).id;
         next()
     } else {

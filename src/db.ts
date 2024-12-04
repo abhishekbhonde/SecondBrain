@@ -1,22 +1,27 @@
+
 import mongoose, {model, Schema} from "mongoose";
 
-async function main(){
-    await mongoose.connect("mongodb://localhost:27017/")
-}
-const UserModel = new Schema({
-    username:{type:String, unique:true, required:true},
-    password:{type:String, required:true}
+mongoose.connect("mongodb://localhost:27017/brainly")
+
+const UserSchema = new Schema({
+    username: {type: String, unique: true},
+    password: String
 })
 
-export const User =  model("User", UserModel);
+export const UserModel = model("User", UserSchema);
 
 const ContentSchema = new Schema({
-    // title: String,
+    title: String,
     link: String,
     tags: [{type: mongoose.Types.ObjectId, ref: 'Tag'}],
     type: String,
     userId: {type: mongoose.Types.ObjectId, ref: 'User', required: true },
 })
-export const Content = model("Content", ContentSchema)
 
-main()
+const LinkSchema = new Schema({
+    hash: String,
+    userId: {type: mongoose.Types.ObjectId, ref: 'User', required: true, unique: true },
+})
+
+export const LinkModel = model("Links", LinkSchema);
+export const ContentModel = model("Content", ContentSchema);

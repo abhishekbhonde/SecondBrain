@@ -3,13 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthMiddleware = void 0;
+exports.userMiddleware = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
-const AuthMiddleware = (req, res, next) => {
+const config_1 = require("./config");
+const userMiddleware = (req, res, next) => {
     const header = req.headers["authorization"];
-    const decoded = jsonwebtoken_1.default.verify(header, process.env.JWT_SECRET);
+    const decoded = jsonwebtoken_1.default.verify(header, config_1.JWT_PASSWORD);
     if (decoded) {
         if (typeof decoded === "string") {
             res.status(403).json({
@@ -17,7 +16,6 @@ const AuthMiddleware = (req, res, next) => {
             });
             return;
         }
-        //@ts-ignore
         req.userId = decoded.id;
         next();
     }
@@ -27,4 +25,4 @@ const AuthMiddleware = (req, res, next) => {
         });
     }
 };
-exports.AuthMiddleware = AuthMiddleware;
+exports.userMiddleware = userMiddleware;
