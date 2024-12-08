@@ -5,11 +5,14 @@ import { Card } from "./components/ui/Card";
 import { CreateContentModal } from "./components/ui/CreateContentModal";
 import Plus from "./components/ui/icons/Plus";
 import ShareIcon from "./components/ui/icons/ShareIcon";
+import { SideBar } from "./components/ui/SideBar";
 
 function App() {
   const [modalopen, setModalopen] = useState(false)
   return (
-   <div className="p-4">
+   <div>
+    <SideBar/>
+    <div className="p-4 ml-72 bg-slate-100 min-h-screen border-2">
     <CreateContentModal open={modalopen} onClose={(()=>{
       setModalopen(false)
     })}/>
@@ -36,6 +39,7 @@ function App() {
      <Card title="Web vidfe" link="https://www.youtube.com/watch?v=nWI00u-tivs" type="youtube"/>
      </div>
      </div>
+   </div>
   );
 }
 
