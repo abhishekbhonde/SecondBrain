@@ -2,12 +2,13 @@ import express, { Request, Response } from "express";
 import { random } from "./utils";
 import jwt from "jsonwebtoken";
 import { ContentModel, LinkModel, UserModel } from "./db";
-import { JWT_PASSWORD } from "./config";
+// import { JWT_PASSWORD } from "./config";
 import { userMiddleware } from "./middleware";
 import cors from "cors";
 import { z } from "zod";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
+import { JWT_PASSWORD } from "./config";
 dotenv.config();
 const app = express();
 app.use(express.json());
@@ -48,38 +49,48 @@ app.post(
   },
 );
 
-app.post(
-  "/api/v1/signin",
-  async (req: Request, res: Response): Promise<void> => {
-    try {
-      const { username, password } = req.body;
 
-      const response = await UserModel.find({
-        username,
-      });
+app.post("/api/v1/signin", async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { username, password } = req.body;
 
-      const storedPassword = await bcrypt.compare(
-        password,
-        response[0].password as string,
-      );
-
-      if (username && storedPassword) {
-        const token = jwt.sign(
-          {
-            username,
-          },
-          process.env.JWT_PASSWORD as string,
-        );
-
-        res.status(200).json({ message: "Signin successful", token });
-      }
-    } catch (error) {
-      res.status(500).json({
-        message: "signin unsuccessful",
-      });
+    // Ensure both username and password are provided
+    if (!username || !password) {
+       res.status(400).json({ message: "Username and password are required." });
     }
-  },
-);
+
+    // Find the user by username
+    const user = await UserModel.findOne({ username });
+
+    // If user not found, return an error
+    if (!user) {
+       res.status(400).json({ message: "Invalid username or password." });
+    }
+
+    // Compare the provided password with the stored hashed password
+    const storedPassword = await bcrypt.compare(password, user?.password as string);
+
+    // If password doesn't match, return an error
+    if (!storedPassword) {
+       res.status(400).json({ message: "Invalid username or password." });
+    }
+
+    // Sign a JWT token with the username
+    const token = jwt.sign(
+      { username },
+      JWT_PASSWORD as string,  // Make sure you have the correct JWT secret here
+  
+    );
+
+    // Send the response with the token
+    res.status(200).json({ message: "Signin successful", token });
+  } catch (error) {
+    console.error("Error signing in:", error);  // Log the actual error for debugging
+    res.status(500).json({
+      message: "Signin unsuccessful. Please try again."
+    });
+  }
+});
 
 app.post("/api/v1/content", userMiddleware, async (req, res) => {
   const link = req.body.link;
@@ -87,8 +98,8 @@ app.post("/api/v1/content", userMiddleware, async (req, res) => {
   try {
     const content = await ContentModel.create({
       link,
-      type,
       title: req.body.title,
+      type,
       userId: req.userId,
       tags: [],
     });
