@@ -12,7 +12,7 @@ const userMiddleware = (req, res, next) => {
     if (decoded) {
         if (typeof decoded === "string") {
             res.status(403).json({
-                message: "You are not logged in",
+                message: "You are not logged in"
             });
             return;
         }
@@ -21,7 +21,7 @@ const userMiddleware = (req, res, next) => {
     }
     else {
         res.status(403).json({
-            message: "You are not logged in",
+            message: "You are not logged in"
         });
     }
 };
