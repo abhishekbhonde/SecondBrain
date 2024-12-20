@@ -1,21 +1,28 @@
+import { LinkedinIcon } from "@/icons/LinkedinIcon";
 import { Logo } from "../icons/Logo";
 import { TwitterIcon } from "../icons/TwitterIcon";
 import { YoutubeIcon } from "../icons/YoutubeIcon";
 import { SidebarItem } from "./SidebarItem";
-
+import { InstaIcon } from "@/icons/InstaIcon";
+import { Facebook } from "@/icons/Facebook";
 export function Sidebar() {
     return (
-        <div className="h-screen bg-gray-800 border-r border-gray-600 w-72 fixed left-0 top-0 pl-6">
-            <div className="flex text-2xl pt-8 items-center text-white">
-                <div className="pr-2 text-purple-600">
-                    <Logo />
-                </div>
-                Brainly
-            </div>
-            <div className="pt-8 pl-4">
-                <SidebarItem text="Twitter" icon={<TwitterIcon />} />
-                <SidebarItem text="Youtube" icon={<YoutubeIcon />} />
-            </div>
+      <div className="h-screen bg-gray-900 text-white border-r w-72 fixed left-0 top-0 pl-6">
+        <div className="flex text-2xl pt-8 items-center">
+          <div className="pr-2 text-purple-600">
+            <Logo />
+          </div>
+          Brainly
         </div>
+        <div className="pt-8 pl-4">
+          <SidebarItem text="Twitter" icon={<TwitterIcon />} />
+          <SidebarItem text="Youtube" icon={<YoutubeIcon />} />
+          <SidebarItem text="Linkedin" icon={<LinkedinIcon />} />
+          <SidebarItem text="Instagram" icon={<InstaIcon />} />
+          <SidebarItem text="Facebook" icon={<Facebook />} />
+      
+        </div>
+      </div>
     );
-}
+  }
+  

@@ -1,12 +1,14 @@
-import { Button } from "@/components/Button";
-import { Card } from "@/components/Card";
-import { CreateContentModal } from "@/components/CreateContentModal";
-import { HeroHighlightDemo } from "@/components/HeroHighlightDemo";
-import { BACKEND_URL } from "@/config";
-import { useContent } from "@/hooks/useContent";
-import axios from "axios";
-import { PlusIcon, ShareIcon, Sidebar } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Button } from "../components/Button";
+import { Card } from "../components/Card";
+import { CreateContentModal } from "../components/CreateContentModal";
+import { PlusIcon } from "../icons/PlusIcon";
+import { ShareIcon } from "../icons/ShareIcon";
+import { Sidebar } from "../components/Sidebar";
+import { useContent } from "../hooks/useContent";
+import { BACKEND_URL } from "../config";
+import axios from "axios";
+import { HeroHighlight } from "@/components/ui/hero-highlight";
 
 export function Dashboard() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -17,17 +19,17 @@ export function Dashboard() {
   }, [modalOpen]);
 
   return (
-    <div className="min-h-screen bg-gray-100">
+      <HeroHighlight>
+          <div className="flex w-screen">
       <Sidebar />
-      <div className="p-4 ml-72 min-h-screen bg-gradient-to-r from-purple-500 via-pink-500 to-red-500">
-        {/* Here, you can also apply the background gradient in the Dashboard container */}
+      <div className="p-6 ml-72 w-screen h-screen text-white border-2 border-gray-700">
         <CreateContentModal
           open={modalOpen}
           onClose={() => {
             setModalOpen(false);
           }}
         />
-        <div className="flex justify-end gap-4">
+        <div className="flex justify-end gap-4 mb-6">
           <Button
             onClick={() => {
               setModalOpen(true);
@@ -58,13 +60,13 @@ export function Dashboard() {
           />
         </div>
 
-        <div className="flex gap-4 flex-wrap">
+        <div className="flex gap-6 flex-wrap">
           {contents.map(({ type, link, title }) => (
-            <Card type={type} link={link} title={title} />
+            <Card type={type} link={link} title={title} key={title} />
           ))}
         </div>
       </div>
-      <HeroHighlightDemo />
     </div>
+      </HeroHighlight>
   );
 }

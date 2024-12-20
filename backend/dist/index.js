@@ -19,29 +19,17 @@ const db_1 = require("./db");
 const config_1 = require("./config");
 const middleware_1 = require("./middleware");
 const cors_1 = __importDefault(require("cors"));
-const zod_1 = require("zod");
-const bcrypt_1 = __importDefault(require("bcrypt"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
-const userSchema = zod_1.z.object({
-    username: zod_1.z.string().email(),
-    password: zod_1.z.string().min(6)
-});
 app.post("/api/v1/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const parsedData = userSchema.safeParse(req.body);
-    if (!parsedData.success) {
-        res.status(400).json({
-            message: "Invalid input"
-        });
-        return;
-    }
-    const { username, password } = parsedData.data;
+    // TODO: zod validation , hash the password
+    const username = req.body.username;
+    const password = req.body.password;
     try {
-        const hashedPassword = yield bcrypt_1.default.hash(password, 10);
         yield db_1.UserModel.create({
             username: username,
-            password: hashedPassword
+            password: password
         });
         res.json({
             message: "User signed up"
@@ -54,79 +42,59 @@ app.post("/api/v1/signup", (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
 }));
 app.post("/api/v1/signin", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { username, password } = req.body;
-        const response = yield db_1.UserModel.find({
-            username
+    const username = req.body.username;
+    const password = req.body.password;
+    const existingUser = yield db_1.UserModel.findOne({
+        username,
+        password
+    });
+    if (existingUser) {
+        const token = jsonwebtoken_1.default.sign({
+            id: existingUser._id
+        }, config_1.JWT_PASSWORD);
+        res.json({
+            token
         });
-        const storedPassword = yield bcrypt_1.default.compare(password, response[0].password);
-        if (username && storedPassword) {
-            const token = jsonwebtoken_1.default.sign({
-                username
-            }, config_1.JWT_PASSWORD);
-            res.status(200).json({ message: "Signin successful", token });
-        }
     }
-    catch (error) {
-        res.status(500).json({
-            message: "signin unsuccessful"
+    else {
+        res.status(403).json({
+            message: "Incorrrect credentials"
         });
     }
 }));
 app.post("/api/v1/content", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const link = req.body.link;
     const type = req.body.type;
-    try {
-        const content = yield db_1.ContentModel.create({
-            link,
-            type,
-            title: req.body.title,
-            userId: req.userId,
-            tags: []
-        });
-        res.json({
-            message: "Content added", content
-        });
-    }
-    catch (error) {
-        res.json({
-            message: "error in adding cotent"
-        });
-    }
+    yield db_1.ContentModel.create({
+        link,
+        type,
+        title: req.body.title,
+        userId: req.userId,
+        tags: []
+    });
+    res.json({
+        message: "Content added"
+    });
 }));
 app.get("/api/v1/content", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // @ts-ignore
     const userId = req.userId;
-    try {
-        const content = yield db_1.ContentModel.find({
-            userId: userId
-        }).populate("userId", "username");
-        res.json({
-            content
-        });
-    }
-    catch (error) {
-        res.json({
-            message: "error in fetching data"
-        });
-    }
+    const content = yield db_1.ContentModel.find({
+        userId: userId
+    }).populate("userId", "username");
+    res.json({
+        content
+    });
 }));
 app.delete("/api/v1/content", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const contentId = req.body.contentId;
-    try {
-        yield db_1.ContentModel.deleteMany({
-            contentId,
-            userId: req.userId
-        });
-        res.json({
-            message: "Deleted"
-        });
-    }
-    catch (error) {
-        res.json({
-            message: "error in deleting data"
-        });
-    }
+    yield db_1.ContentModel.deleteMany({
+        contentId,
+        userId: req.userId
+    });
+    res.json({
+        message: "Deleted"
+    });
 }));
 app.post("/api/v1/brain/share", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const share = req.body.share;

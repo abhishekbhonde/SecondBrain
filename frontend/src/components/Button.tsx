@@ -1,32 +1,32 @@
 import { ReactElement } from "react";
 
 interface ButtonProps {
-    variant: "primary" | "secondary";
-    text: string;
-    startIcon: ReactElement;
-    onClick?: () => void;
-    fullWidth?: boolean;
-    loading?: boolean;
+  variant: "primary" | "secondary";
+  text: string;
+  startIcon: ReactElement;
+  onClick?: () => void;
+  fullWidth?: boolean;
+  loading?: boolean;
 }
 
 const variantClasses = {
-    "primary": "bg-purple-800 text-white hover:bg-purple-700",
-    "secondary": "bg-gray-700 text-purple-300 hover:bg-gray-600",
+  primary: "bg-gradient-to-r from-purple-600 to-purple-700 text-white hover:from-purple-700 hover:to-purple-800 focus:ring-2 focus:ring-purple-600",
+  secondary: "bg-gradient-to-r from-gray-700 to-gray-800 text-white hover:from-gray-800 hover:to-gray-700 focus:ring-2 focus:ring-purple-500",
 };
 
-const defaultStyles = "px-4 py-2 rounded-md font-light flex items-center transition-all";
+const defaultStyles = "px-6 py-3 rounded-lg font-medium flex items-center transition-all duration-300 transform";
 
-export function Button({variant, text, startIcon, onClick, fullWidth, loading}: ButtonProps) {
-    return (
-        <button 
-            onClick={onClick} 
-            className={`${variantClasses[variant]} ${defaultStyles} ${fullWidth ? "w-full justify-center" : ""} ${loading ? "opacity-45" : ""}`}
-            disabled={loading}
-        >
-            <div className="pr-2">
-                {startIcon}
-            </div>
-            {text}
-        </button>
-    );
+export function Button({ variant, text, startIcon, onClick, fullWidth, loading }: ButtonProps) {
+  return (
+    <button
+      onClick={onClick}
+      className={`${variantClasses[variant]} ${defaultStyles} ${
+        fullWidth ? "w-full justify-center" : "justify-start"
+      } ${loading ? "opacity-50 cursor-not-allowed" : ""} hover:scale-105`}
+      disabled={loading}
+    >
+      <div className="pr-3">{startIcon}</div>
+      {text}
+    </button>
+  );
 }

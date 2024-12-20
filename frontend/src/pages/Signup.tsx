@@ -7,7 +7,7 @@ import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 import { HeroHighlight } from "@/components/ui/hero-highlight";
 
-export function Signup() {
+export default function Signup() {
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
@@ -24,18 +24,43 @@ export function Signup() {
   }
 
   return (
-    <HeroHighlight containerClassName="bg-gray-900">
-      <div className="h-screen w-screen flex justify-center items-center">
-        {/* Dark-themed form background */}
-        
-        <div className="bg-gray-800 flex flex-col gap-2 text-white rounded-xl border min-w-48 p-8 z-20 relative">
-            <h1 className="text-center font-roboto pb-6 font-md text-[30px]">Signup Here</h1>
-            <label htmlFor="username">Enter your username</label>
-            <Input  reference={usernameRef} placeholder="Username" />
-            <label htmlFor="username">Enter your password</label>
-          <Input reference={passwordRef} placeholder="Password" />
-          <div className="flex justify-center pt-10">
-            <Button onClick={signup} loading={false} variant="primary" text="Signup" fullWidth={true} startIcon={undefined} />
+    <HeroHighlight>
+      <div className="h-screen w-screen flex justify-center items-center ">
+        {/* Form Container with modern design */}
+        <div className="bg-gray-900 bg-opacity-80 flex flex-col gap-3 text-white rounded-2xl border-2 border-gray-700 min-w-[360px] p-10 z-20 relative shadow-lg">
+          <h1 className="text-center font-roboto text-4xl font-semibold text-white mb-6">
+            Create Your Account
+          </h1>
+
+          <label htmlFor="username" className="text-lg font-medium">Username</label>
+          <Input 
+            reference={usernameRef} 
+            placeholder="Enter your username" 
+          
+          />
+
+          <label htmlFor="password" className="text-lg font-medium mt-1">Password</label>
+          <Input 
+            reference={passwordRef} 
+            placeholder="Enter your password" 
+            
+
+          />
+
+          <div className="flex justify-center pt-4">
+            <Button
+              onClick={signup}
+              loading={false}
+              variant="primary"
+              text="Signup"
+              fullWidth={true}
+              startIcon={undefined}
+              className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white rounded-lg shadow-xl transform transition duration-300 hover:scale-105"
+            />
+          </div>
+
+          <div className="text-center text-gray-400 mt-4">
+            <p className="text-sm">Already have an account? <a href="/signin" className="text-indigo-400 hover:text-indigo-300">Sign in</a></p>
           </div>
         </div>
       </div>

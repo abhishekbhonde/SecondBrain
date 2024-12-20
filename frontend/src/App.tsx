@@ -1,7 +1,7 @@
 // App.tsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Signin } from "./pages/Signin";
-import { Signup } from "./pages/Signup";
+import Signin from "./pages/Signin";
+import  Signup  from "./pages/Signup";
 import { Dashboard } from "./pages/dashboard";
 import LandingPage from "./pages/LandingPage";
 import { HeroHighlightDemo } from "./components/HeroHighlightDemo"; // Import HeroHighlightDemo
