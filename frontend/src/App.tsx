@@ -10,7 +10,9 @@ function App() {
   return (
     <BrowserRouter>
       {/* Wrap the entire app inside HeroHighlightDemo */}
-      
+        
+        
+       
         <Routes>
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
