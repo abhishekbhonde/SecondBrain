@@ -16,9 +16,10 @@ const express_1 = __importDefault(require("express"));
 const utils_1 = require("./utils");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const db_1 = require("./db");
-const config_1 = require("./config");
+// import { JWT_PASSWORD, PORT } from "./config";
 const middleware_1 = require("./middleware");
 const cors_1 = __importDefault(require("cors"));
+require('dotenv').config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
@@ -51,7 +52,7 @@ app.post("/api/v1/signin", (req, res) => __awaiter(void 0, void 0, void 0, funct
     if (existingUser) {
         const token = jsonwebtoken_1.default.sign({
             id: existingUser._id
-        }, config_1.JWT_PASSWORD);
+        }, process.env.JWT_PASSWORD);
         res.json({
             token
         });
@@ -156,4 +157,4 @@ app.get("/api/v1/brain/:shareLink", (req, res) => __awaiter(void 0, void 0, void
         content: content
     });
 }));
-app.listen(3000);
+app.listen(process.env.PORT || 4000);
