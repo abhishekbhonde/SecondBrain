@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+
 import { FloatingNav } from "./ui/floating-navbar";
 import { HomeIcon, UserIcon, HeartIcon } from "@heroicons/react/24/outline"; // Import Heroicons
 

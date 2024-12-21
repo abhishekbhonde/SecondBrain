@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { Link } from "react-router-dom"; // Importing Link from react-router-dom
 import { cn } from "@/lib/utils"; // Assuming this is a utility function for classNames
 
