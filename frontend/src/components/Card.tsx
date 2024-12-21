@@ -1,7 +1,7 @@
+"use client";
 import { useState, useEffect } from "react";
 import { ShareIcon } from "../icons/ShareIcon";
 import { CrossIcon } from "../icons/CrossIcon"; // Import CrossIcon
-
 
 interface CardProps {
   title: string;
@@ -45,15 +45,15 @@ export function Card({ title, link, type }: CardProps) {
   if (!isVisible) return null; // Don't render the card if it's not visible
 
   return (
-    <div className="p-4 bg-gray-900 text-white rounded-md border border-gray-700 max-w-72 min-h-48">
-      <div className="flex justify-between">
-        <div className="flex items-center text-md text-gray-300">
+    <div className="p-4 bg-gray-900 text-white rounded-md border border-gray-700 max-w-72 min-h-48 w-full mx-auto sm:w-80 sm:max-w-none">
+      <div className="flex flex-col sm:flex-row justify-between">
+        <div className="flex items-center text-sm sm:text-md text-gray-300">
           <div className="text-gray-500 pr-2">
             <ShareIcon />
           </div>
           {title}
         </div>
-        <div className="flex items-center">
+        <div className="flex justify-between sm:ml-4 items-center pt-3 sm:pt-0">
           <div className="pr-2 text-gray-500">
             <a href={link} target="_blank" rel="noopener noreferrer">
               <ShareIcon />
@@ -72,7 +72,7 @@ export function Card({ title, link, type }: CardProps) {
         {/* YouTube Content */}
         {type === "youtube" && (
           <iframe
-            className="w-full"
+            className="w-full max-w-full"
             src={link.replace("watch", "embed").replace("?v=", "/")}
             title="YouTube video player"
             frameBorder="0"
@@ -84,26 +84,26 @@ export function Card({ title, link, type }: CardProps) {
 
         {/* Twitter Content */}
         {type === "twitter" && (
-          <blockquote className="twitter-tweet">
+          <blockquote className="twitter-tweet w-full">
             <a href={link.replace("x.com", "twitter.com")}></a>
           </blockquote>
         )}
 
         {/* Instagram Content */}
         {type === "instagram" && (
-          <blockquote className="instagram-media" data-instgrm-permalink={link}>
+          <blockquote className="instagram-media w-full" data-instgrm-permalink={link}>
             <a href={link}></a>
           </blockquote>
         )}
 
         {/* Facebook Content */}
         {type === "facebook" && (
-          <div className="fb-post" data-href={link} data-width="500"></div>
+          <div className="fb-post w-full" data-href={link} data-width="500"></div>
         )}
 
         {/* LinkedIn Content */}
         {type === "linkedin" && (
-          <div className="linkedin-post" data-href={link}>
+          <div className="linkedin-post w-full" data-href={link}>
             <script type="IN/Share" data-url={link}></script>
           </div>
         )}

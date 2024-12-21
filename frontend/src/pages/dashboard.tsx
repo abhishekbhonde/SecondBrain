@@ -6,7 +6,6 @@ import { PlusIcon } from "../icons/PlusIcon";
 import { ShareIcon } from "../icons/ShareIcon";
 import { Sidebar } from "../components/Sidebar";
 import { useContent } from "../hooks/useContent";
-import { BACKEND_URL } from "../config";
 import axios from "axios";
 import { HeroHighlight } from "@/components/ui/hero-highlight";
 
@@ -20,9 +19,9 @@ export function Dashboard() {
 
   return (
       <HeroHighlight>
-          <div className="flex w-screen">
+          <div className="flex w-screen ">
       <Sidebar />
-      <div className="p-6 ml-72 w-screen h-screen text-white border-2 border-gray-700">
+      <div className="p-6 ml-72 h-screen w-screen ml-2 text-white border-2 border-gray-700">
         <CreateContentModal
           open={modalOpen}
           onClose={() => {
@@ -41,7 +40,7 @@ export function Dashboard() {
           <Button
             onClick={async () => {
               const response = await axios.post(
-                `${BACKEND_URL}/api/v1/brain/share`,
+               "https://secondbrain-o8wu.onrender.com/api/v1/brain/share",
                 {
                   share: true,
                 },
@@ -51,7 +50,7 @@ export function Dashboard() {
                   },
                 }
               );
-              const shareUrl = `http://localhost:5173/share/${response.data.hash}`;
+              const shareUrl = `https://secondbrain-o8wu.onrender.com/share/${response.data.hash}`;
               alert(shareUrl);
             }}
             variant="secondary"

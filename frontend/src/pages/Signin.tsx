@@ -3,9 +3,10 @@ import { useRef } from "react";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 import axios from "axios";
-import { BACKEND_URL } from "../config";
+// import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 import { HeroHighlight } from "@/components/ui/hero-highlight";
+
 
 export default function Signin() {
   const usernameRef = useRef<HTMLInputElement>(null);
@@ -15,7 +16,7 @@ export default function Signin() {
   async function signin() {
     const username = usernameRef.current?.value;
     const password = passwordRef.current?.value;
-    const response = await axios.post(BACKEND_URL + "/api/v1/signin", {
+    const response = await axios.post("https://secondbrain-o8wu.onrender.com/api/v1/signin", {
       username,
       password,
     });
@@ -28,7 +29,7 @@ export default function Signin() {
     <HeroHighlight>
       <div className="h-screen w-screen flex justify-center items-center ">
         {/* Form Container with modern design */}
-        <div className="bg-gray-900 bg-opacity-80 flex flex-col gap-3 text-white rounded-2xl border-2 border-gray-700 min-w-[360px] p-10 z-20 relative shadow-lg">
+        <div className="bg-gray-900 bg-opacity-80 flex flex-col gap-3 text-white rounded-2xl border-2 border-gray-700 min-w-[360px] p-4 md:p-10 z-20 relative shadow-lg">
           <h1 className="text-center font-roboto text-4xl font-semibold text-white mb-6">
             Welcome Back
           </h1>
@@ -53,8 +54,7 @@ export default function Signin() {
               loading={false}
               variant="primary"
               text="Signin"
-              fullWidth={true}
-             
+              fullWidth={true} startIcon={undefined}             
             />
           </div>
 
