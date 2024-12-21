@@ -2,7 +2,7 @@ import express from "express";
 import { random } from "./utils";
 import jwt from "jsonwebtoken";
 import { ContentModel, LinkModel, UserModel } from "./db";
-import { JWT_PASSWORD } from "./config";
+import { JWT_PASSWORD, PORT } from "./config";
 import { userMiddleware } from "./middleware";
 import cors from "cors";
 
@@ -165,4 +165,4 @@ app.get("/api/v1/brain/:shareLink", async (req, res) => {
 
 })
 
-app.listen(3000);
+app.listen(PORT || 4000);
