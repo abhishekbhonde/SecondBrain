@@ -2,9 +2,10 @@ import express from "express";
 import { random } from "./utils";
 import jwt from "jsonwebtoken";
 import { ContentModel, LinkModel, UserModel } from "./db";
-import { JWT_PASSWORD, PORT } from "./config";
+// import { JWT_PASSWORD, PORT } from "./config";
 import { userMiddleware } from "./middleware";
 import cors from "cors";
+require('dotenv').config();
 
 const app = express();
 app.use(express.json());
@@ -42,7 +43,7 @@ app.post("/api/v1/signin", async (req, res) => {
     if (existingUser) {
         const token = jwt.sign({
             id: existingUser._id
-        }, JWT_PASSWORD)
+        }, process.env.JWT_PASSWORD as string)
 
         res.json({
             token
@@ -165,4 +166,4 @@ app.get("/api/v1/brain/:shareLink", async (req, res) => {
 
 })
 
-app.listen(PORT || 4000);
+app.listen(process.env.PORT as string || 4000);
