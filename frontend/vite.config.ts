@@ -10,4 +10,11 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    outDir: "dist", // Explicitly set the output directory
+    assetsDir: "assets", // Specify directory for assets within the output
+  },
+  server: {
+    port: 3000, // Optional: Set development server port
+  },
 });
