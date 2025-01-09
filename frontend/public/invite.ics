@@ -1,0 +1,41 @@
+BEGIN:VCALENDAR
+PRODID:-//Google Inc//Google Calendar 70.9054//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:REQUEST
+BEGIN:VTIMEZONE
+TZID:Asia/Kolkata
+X-LIC-LOCATION:Asia/Kolkata
+BEGIN:STANDARD
+TZOFFSETFROM:+0530
+TZOFFSETTO:+0530
+TZNAME:GMT+5:30
+DTSTART:19700101T000000
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+DTSTART;TZID=Asia/Kolkata:20241225T160000
+DTEND;TZID=Asia/Kolkata:20241225T163000
+DTSTAMP:20241224T110328Z
+ORGANIZER;CN=Shreyansh Bhadoria:mailto:shreyanshbhadoria@gmail.com
+UID:t2jc3a91s8d4ijiaor5qv128es@google.com
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=abhishekbhonde31@gmail.com;X-NUM-GUESTS=0:mailto:abhishekbhonde31@g
+ mail.com
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;RSVP=TRUE
+ ;CN=Shreyansh Bhadoria;X-NUM-GUESTS=0:mailto:shreyanshbhadoria@gmail.com
+X-MICROSOFT-CDO-OWNERAPPTID:-500485344
+CREATED:20241224T110326Z
+DESCRIPTION:Event Name: 30 Minute Meeting\n\nHands On Coding + Tech Assessm
+ ent\n\nNeed to make changes to this event?\nCancel: https://calendly.com/ca
+ ncellations/3ec97430-02b9-4bbc-b852-c5c8d61cdef1\nReschedule: https://calen
+ dly.com/reschedulings/3ec97430-02b9-4bbc-b852-c5c8d61cdef1\n\nPowered by Ca
+ lendly.com\n
+LAST-MODIFIED:20241224T110328Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Abhishek Bhonde and Shreyansh Bhadoria
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR
